@@ -1,0 +1,53 @@
+---
+title: "HNR 499 Project"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+```
+
+## Data Cleaning
+
+```{r read-clean}
+
+files     <- list.files("data", full.names = TRUE) 
+zip_codes <- readr::parse_number(files) %>% unique() %>% as.character()
+
+tbl <- files %>% 
+  keep(str_detect(., '49315')) %>% 
+  map(~ .x %>% 
+        read_csv(show_col_types = FALSE) %>%
+        drop_na() %>%
+        janitor::clean_names() %>% 
+        mutate(zipcode = readr::parse_number(.x),
+               tract = row_number()) %>% 
+        select(-c(census_tract, fips_code, formatted_fips))) %>% 
+  reduce(left_join, by = c("zipcode", "tract")) %>% 
+  group_by(zipcode) %>% 
+  summarize_all(mean, na.rm = TRUE)
+
+read_clean_zip <- function(zip) {
+  
+  files %>% 
+    keep(str_detect(., zip)) %>% 
+    map(~ .x %>% 
+          read_csv(show_col_types = FALSE) %>%
+          drop_na() %>%
+          janitor::clean_names() %>% 
+          mutate(zipcode = readr::parse_number(.x),
+                 tract = row_number()) %>% 
+          select(-c(census_tract, fips_code, formatted_fips))) %>% 
+    reduce(left_join, by = c("zipcode", "tract")) %>% 
+    group_by(zipcode) %>% 
+    summarize_all(mean, na.rm = TRUE) %>% 
+    select(-tract)
+}
+
+tbl <- zip_codes %>% 
+  map_df(read_clean_zip)
+```
