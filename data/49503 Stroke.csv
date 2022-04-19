@@ -1,0 +1,23 @@
+"Census Tract","FIPS Code","Formatted FIPS","Estimated percent of adults ever diagnosed with a stroke in 2018"
+"26081001200, MI","26081001200","=""26081001200""","2.5"
+"26081001300, MI","26081001300","=""26081001300""","2.1"
+"26081001400, MI","26081001400","=""26081001400""","1.7"
+"26081002000, MI","26081002000","=""26081002000""","2.4"
+"26081002100, MI","26081002100","=""26081002100""","2.2"
+"26081002200, MI","26081002200","=""26081002200""","1.9"
+"26081002300, MI","26081002300","=""26081002300""","3.1"
+"26081002600, MI","26081002600","=""26081002600""","2.2"
+"26081002900, MI","26081002900","=""26081002900""","2.4"
+"26081003000, MI","26081003000","=""26081003000""","3.2"
+"26081003900, MI","26081003900","=""26081003900""","1.9"
+
+"Location: 49503 (Zip)"
+
+"Census Tract Boundary Year: 2010"
+
+"Indicator source: PolicyMap & CDC BRFSS"
+"https://www.policymap.com/data/our-data-directory/#CDC%20Behavioral%20Risk%20Factor%20Surveillance%20System"
+
+"When using PolicyMap data in your work, please consult the Terms of Use and the instructions for Citing Us:"
+"https://www.policymap.com/terms/"
+"https://www.policymap.com/citing/"
