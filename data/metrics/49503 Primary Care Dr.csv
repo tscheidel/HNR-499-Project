@@ -1,0 +1,23 @@
+"Census Tract","FIPS Code","Formatted FIPS","Estimated percent of adults reporting to have a personal doctor "
+"26081001200, MI","26081001200","=""26081001200""","81.0"
+"26081001300, MI","26081001300","=""26081001300""","78.6"
+"26081001400, MI","26081001400","=""26081001400""","77.0"
+"26081002000, MI","26081002000","=""26081002000""","79.4"
+"26081002100, MI","26081002100","=""26081002100""","78.5"
+"26081002200, MI","26081002200","=""26081002200""","78.3"
+"26081002300, MI","26081002300","=""26081002300""","85.8"
+"26081002600, MI","26081002600","=""26081002600""","72.8"
+"26081002900, MI","26081002900","=""26081002900""","79.3"
+"26081003000, MI","26081003000","=""26081003000""","80.0"
+"26081003900, MI","26081003900","=""26081003900""","72.5"
+
+"Location: 49503 (Zip)"
+
+"Census Tract Boundary Year: 2010"
+
+"Indicator source: PolicyMap & CDC BRFSS"
+"https://www.policymap.com/data/our-data-directory/#CDC%20Behavioral%20Risk%20Factor%20Surveillance%20System"
+
+"When using PolicyMap data in your work, please consult the Terms of Use and the instructions for Citing Us:"
+"https://www.policymap.com/terms/"
+"https://www.policymap.com/citing/"

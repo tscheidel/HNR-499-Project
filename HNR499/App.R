@@ -3,16 +3,17 @@ library(shinyalert)
 library(tidyverse)
 library(tigris)
 library(leaflet)
+library(bslib)
 options(tigris_use_cache = TRUE)
 
 # Define UI for app that draws a histogram ----
-ui <- fluidPage(theme = "style.css",
-                div(style = "padding: 1px 0px; width: '100%'",
-                    titlePanel(
-                      title = "",
-                      windowTitle = "Art Explorer"
-                    )
-                ),
+ui <- fluidPage(theme = bs_theme(version = 4, bootswatch = "minty"),
+                          div(style = "padding: 1px 0px; width: '100%'",
+                              titlePanel(
+                                title = "",
+                                windowTitle = "Art Explorer"
+                              )
+                          ),
     
       navbarPage(
         #title of the project
@@ -31,16 +32,38 @@ ui <- fluidPage(theme = "style.css",
                              style = "font-family: 'times'; font-si16pt"),
                            br(),
                            h4("Neighborhood and Built Environment", style = "font-family: 'times'; font-si16pt" ),
-                           p("Neighborhood and Built Environment", style = "font-family: 'times'; font-si16pt"),
+                           p("An individual’s neighborhood and built environment incorporates a large range of factors,
+                             including rates of violence and violent crimes, prevalence of unsafe water or air and 
+                             accessibility to safe spaces for exercise and environmental play. Often, racial and 
+                             ethnic minorities, as well as those with low incomes, live in neighborhoods with high 
+                             rates of these health risks and share an unproportionate burden of the negative health 
+                             outcomes associated with them. Interventions and changes at the governmental level are 
+                             the most needed, as they have the highest impact on infrastructure changes.", 
+                             style = "font-family: 'times'; font-si16pt"),
                            br(),
                            h4("Social and Community Context", style = "font-family: 'times'; font-si16pt"),
-                           p("Social and Community Context", style = "font-family: 'times'; font-si16pt"),
+                           p("A person’s social support system and relationships can have a big impact on their health.
+                             Living, learning, and working in environments that make an individual feel safe promotes
+                             better overall health. However, some may face difficulties and discrimination in their lifetime
+                             which correlates with more negative health outcomes. Cultivation of positive relationships within
+                             a community, as well as those of an interpersonal nature, is very important to living a healthy life. ", style = "font-family: 'times'; font-si16pt"),
                            br(),
                            h4("Economic Stability", style = "font-family: 'times'; font-si16pt"),
-                           p("Economic Stability", style = "font-family: 'times'; font-si16pt"),
+                           p("An individual’s economic stability plays a huge role in overall health. 
+                             Those with steady employment are more likely to have better access to healthier foods, pay for 
+                             healthcare expenses and live in safer neighborhoods—all of which play an important role in health. 
+                             According to US Census data, 1 in every 10 people in the United States lived in poverty in 2018, 
+                             which means 10 percent of the population was at increased risk for greater negative health outcomes. 
+                             Government assistance and aid can decrease the health discrepancies we see in the population living 
+                             in poverty and those unemployed.", style = "font-family: 'times'; font-si16pt"),
                            br(),
                            h4("Education Access and Quality", style = "font-family: 'times'; font-si16pt"),
-                           p("Education Access and Quality", style = "font-family: 'times'; font-si16pt"),
+                           p("It is known that education is highly correlated with health and that individuals
+                             with higher levels of education are more likely to lead to longer, healthier lives.
+                             An individual’s success in school is often tied to the socioeconomic status of their
+                             family. Some families live in areas with underperforming schools and others cannot
+                             afford to send their children to college. These barriers to quality and continuing
+                             education can effect an individual’s overall health later in their lifetimes. ", style = "font-family: 'times'; font-si16pt"),
                            br(),
                            h4("Healthcare Access and Quality", style = "font-family: 'times'; font-si16pt"),
                            p("Healthcare Access and Quality", style = "font-family: 'times'; font-si16pt")

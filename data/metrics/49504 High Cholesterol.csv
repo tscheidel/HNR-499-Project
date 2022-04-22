@@ -1,0 +1,21 @@
+"Census Tract","FIPS Code","Formatted FIPS","Estimated percent of adults ever diagnosed with high cholesterol"
+"26081000600, MI","26081000600","=""26081000600""","35.3"
+"26081000700, MI","26081000700","=""26081000700""","27.6"
+"26081000800, MI","26081000800","=""26081000800""","24.8"
+"26081001500, MI","26081001500","=""26081001500""","22.0"
+"26081001600, MI","26081001600","=""26081001600""","25.5"
+"26081001700, MI","26081001700","=""26081001700""","35.1"
+"26081001800, MI","26081001800","=""26081001800""","33.7"
+"26081001900, MI","26081001900","=""26081001900""","23.5"
+"26081002700, MI","26081002700","=""26081002700""","22.8"
+
+"Location: 49504 (Zip)"
+
+"Census Tract Boundary Year: 2010"
+
+"Indicator source: PolicyMap & CDC BRFSS"
+"https://www.policymap.com/data/our-data-directory/#CDC%20Behavioral%20Risk%20Factor%20Surveillance%20System"
+
+"When using PolicyMap data in your work, please consult the Terms of Use and the instructions for Citing Us:"
+"https://www.policymap.com/terms/"
+"https://www.policymap.com/citing/"
