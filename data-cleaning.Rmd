@@ -63,5 +63,11 @@ pop_tbl <- pop_zip_codes %>%
 tbl <- metrics_tbl %>% 
   left_join(pop_tbl, by = "zipcode")
 
+tbl <- tbl %>%
+  select(-estimated_percent_of_all_people_without_health_insurance_betwee.y) %>%
+  mutate(estimated_percent_of_all_people_without_health_insurance_betwee =
+           coalesce(estimated_percent_of_all_people_without_health_insurance_betwee.x,
+                    estimated_percent_of_all_people_without_health_insurance_betwee))
+
 write_csv(tbl, "kent_county_2020_data.csv")
 ```

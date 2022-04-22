@@ -5,6 +5,59 @@ library(tigris)
 library(leaflet)
 library(bslib)
 options(tigris_use_cache = TRUE)
+source("../functions.R")
+
+zip_choices <- list("49301" = 1, "49302" = 2, "49306" = 3, "49315" = 4,
+                    "49316" = 5, "49319" = 6, "49321" = 7, "49326" = 8,
+                    "49330" = 9, "49331" = 10, "49341" = 11,
+                    "49345" = 12, "49418" = 13, "49503" = 14, "49504" = 15, 
+                    "49505" = 16, "49506" = 17, "49507" = 18, "49508" = 19,
+                    "49509" = 20, "49512" = 21, "49519" = 22, "49525" = 23,
+                    "49534" = 24, "49544" = 25, "49546" = 26, "49548" = 27)
+
+demographic_choices <- list("Total Population" = 1, "Percent Asian" = 2, "Percent Black/African American" = 3,
+                            "Percent Hispanic" = 4, "Percent Native American/Alaska Native" = 5, 
+                            "Percent Native Hawaiian/Pacific Islander" = 6, "Percent White" = 7,
+                            "Median Age" = 8, "Percent of All People With One or More Disability" = 9,
+                            "Percent of All People Who Are Foreign Born " = 10, 
+                            "Percent of All People Who Are Non-English Speaking" = 11)
+
+education_choices <- list("Percent of All Adults with Less than a 9th Grade Education" = 1,
+                          "Graduation Rate" = 2,
+                          "Percent of All Adults with a High School Diploma but No College Education" = 3,
+                          "Percent of All Asian People Who Have At Least A High School Diploma " = 4,
+                          "Percent of All Black/African American People Who Have At Least A High School Diploma" = 5,
+                          "Percent of All Hispanic People Who Have At Least A High School Diploma" = 6,
+                          "Percent of All White People Who Have At Least A High School Diploma" = 7,
+                          "Percent of All Adults Who Have A Bachelors Degree" = 8,
+                          "Percent of Households with Access to Internet" = 9,
+                          "Percent of Households with Access to Computers" = 10)
+
+economic_choices <- list("Median Household Income" = 1, "Average Number of Jobs Per Household" = 2,
+                         "Percent of All People Living in Poverty" = 3, 
+                         "Percent of All Asian People Who Live In Poverty" = 4,
+                         "Percent of All Black/African American People Who Live in Poverty" = 5,
+                         "Percent of All Hispanic People Who Live in Poverty" = 6,
+                         "Percent of All White People Living in Poverty" = 7,
+                         "Number of People with a Disability Living in Poverty" = 8)
+
+healthaccess_choices <- list("Percent of All Adults with a Primary Care Physician" = 1,
+                             "Percent of All Adults Who Have An Annual Physical" = 2,
+                             "Average Out-of-Pocket Spending on Medical Expenses" = 3,
+                             "Percent of All People With Health Insurance " = 4,
+                             "Percent of All People Without Health Insurance" = 5,
+                             "Percent of All Adults Ever Tested for HIV" = 6)
+
+outcomes_choices <- list("Life Expectancy" = 1,
+                         "Percent of All Adults Diagnosed with COPD" = 2,
+                         "Percent of All Adults Diagnosed with Depression" = 3,
+                         "Percent of All Adults Diagnosed with Diabetes" = 4,
+                         "Percent of All Adults Diagnosed with Heart Disease" = 5,
+                         "Percent of All Adults Diagnosed with High Blood Pressure (Hypertension)" = 6,
+                         "Percent of All Adults Diagnosed with High Cholesterol" = 7,
+                         "Percent of All Adults Diagnosed with a Stroke" = 8)
+
+vmapping <- read_csv("../variable-mapping.csv")
 
 # Define UI for app that draws a histogram ----
 ui <- fluidPage(theme = bs_theme(version = 4, bootswatch = "minty"),
@@ -75,36 +128,11 @@ ui <- fluidPage(theme = bs_theme(version = 4, bootswatch = "minty"),
                  sidebarPanel(
                    tags$p(HTML("<b>Zip Codes</b>")),
                    tags$p(span("Use the controls below to select one or more zip codes to explore and compare their demographics.")),
-                   selectInput("selected_demographic", h3("Choose a Demographic to Explore"), 
-                               choices = list("Percent Asian" = 1, "Percent Black" = 2,
-                                              "Percent Hispanic/Latino" = 3,
-                                              "Median Income" = 4,
-                                              "Median Age" = 5,
-                                              "Percent Am Indian/Alaskan Native" = 6,
-                                              "Number of People with a Disability Living in Poverty" = 7,
-                                              "Percent Native Hawaiian/Other Pacific" = 8,
-                                              "Percent with 1 or More Disabilities" = 9,
-                                              "Percent Foreign Born" = 10,
-                                              "Percent Non-English (Age > 5)" = 11,
-                                              "Percent Living in Poverty" = 12)),
-                   selectInput("selected_zipcode_2", h3("Zipcode 1"), 
-                               choices = list("49301" = 1, "49302" = 2, "49306" = 3, "49315" = 4,
-                                  "49316" = 5, "49319" = 6, "49321" = 7, "49326" = 8,
-                                  "49330" = 9, "49331" = 10, "49341" = 11,
-                                  "49345" = 12, "49418" = 13, "49503" = 14, "49504" = 15, 
-                                  "49505" = 16, "49506" = 17, "49507" = 18, "49508" = 19,
-                                  "49509" = 20, "49512" = 21, "49519" = 22, "49525" = 23,
-                                  "49534" = 24, "49544" = 25, "49546" = 26, "49548" = 27)),
-                 selectInput("selected_zipcode_2", h3("Zipcode 2"), 
-                             choices = list("49301" = 1, "49302" = 2, "49306" = 3, "49315" = 4,
-                                            "49316" = 5, "49319" = 6, "49321" = 7, "49326" = 8,
-                                            "49330" = 9, "49331" = 10, "49341" = 11,
-                                            "49345" = 12, "49418" = 13, "49503" = 14, "49504" = 15, 
-                                            "49505" = 16, "49506" = 17, "49507" = 18, "49508" = 19,
-                                            "49509" = 20, "49512" = 21, "49519" = 22, "49525" = 23,
-                                            "49534" = 24, "49544" = 25, "49546" = 26, "49548" = 27)),
-                   mainPanel(
-                     leafletOutput("demographics", width = "400px")
+                   selectInput("selected_demographic", h3("Choose a Demographic to Explore"), choices = demographic_choices),
+                   selectInput("selected_zipcode_2", h3("Zipcode 1"), choices = zip_choices),
+                   selectInput("selected_zipcode_2", h3("Zipcode 2"), choices = zip_choices),
+                 mainPanel(
+                     leafletOutput("plot", width = "400px")
                    )
                  )),
         tabPanel("Neighborhood and Built Environment", 
@@ -112,202 +140,52 @@ ui <- fluidPage(theme = bs_theme(version = 4, bootswatch = "minty"),
                    tags$p(HTML("<b>Zip Codes</b>")),
                    tags$p(span("Use the controls below to explore and compare some of the factors that 
                                make up the neighborhoods and built environments of Kent County zipcodes.")),
-                   selectInput("selected_health_outcome", h3("Health Outcome of Interest"), 
-                               choices = list("Life Expectancy" = 1, "Percent COPD" = 2,
-                                              "Percent Depression" = 3,
-                                              "Percent Diabetes" = 4,
-                                              "Percent Heart Disease" = 5,
-                                              "Percent High Cholesterol" = 6,
-                                              "Percent High Blood Pressure" = 7,
-                                              "Percent Stroke" = 8,
-                                              "Percent Overweight" = 9,
-                                              "Percent Obese" = 10,
-                                              "Percent Childhood Obesity" = 11,
-                                              "Percent Binge-Drinkers" = 12)),
-                   selectInput("selected_zipcode_2", h3("Zipcode 1"), 
-                               choices = list("49301" = 1, "49302" = 2, "49306" = 3, "49315" = 4,
-                                              "49316" = 5, "49319" = 6, "49321" = 7, "49326" = 8,
-                                              "49330" = 9, "49331" = 10, "49341" = 11,
-                                              "49345" = 12, "49418" = 13, "49503" = 14, "49504" = 15, 
-                                              "49505" = 16, "49506" = 17, "49507" = 18, "49508" = 19,
-                                              "49509" = 20, "49512" = 21, "49519" = 22, "49525" = 23,
-                                              "49534" = 24, "49544" = 25, "49546" = 26, "49548" = 27)),
-                   selectInput("selected_zipcode_2", h3("Zipcode 2"), 
-                               choices = list("49301" = 1, "49302" = 2, "49306" = 3, "49315" = 4,
-                                              "49316" = 5, "49319" = 6, "49321" = 7, "49326" = 8,
-                                              "49330" = 9, "49331" = 10, "49341" = 11,
-                                              "49345" = 12, "49418" = 13, "49503" = 14, "49504" = 15, 
-                                              "49505" = 16, "49506" = 17, "49507" = 18, "49508" = 19,
-                                              "49509" = 20, "49512" = 21, "49519" = 22, "49525" = 23,
-                                              "49534" = 24, "49544" = 25, "49546" = 26, "49548" = 27))
+                   selectInput("selected_variable", h3("Select a Variable of Interest"),choices = education_choices),
+                   selectInput("selected_zipcode_2", h3("Zipcode 1"), choices = zip_choices),
+                   selectInput("selected_zipcode_2", h3("Zipcode 2"), choices = zip_choices)
                  )),
         tabPanel("Social and Community Context", 
                  sidebarPanel(
                    tags$p(HTML("<b>Zip Codes</b>")),
                    tags$p(span("Use the controls below to explore and compare some of the factors that make up 
                                 social and community context in of Kent County zipcodes.")),
-                   selectInput("selected_health_outcome", h3("Health Outcome of Interest"), 
-                               choices = list("Life Expectancy" = 1, "Percent COPD" = 2,
-                                              "Percent Depression" = 3,
-                                              "Percent Diabetes" = 4,
-                                              "Percent Heart Disease" = 5,
-                                              "Percent High Cholesterol" = 6,
-                                              "Percent High Blood Pressure" = 7,
-                                              "Percent Stroke" = 8,
-                                              "Percent Overweight" = 9,
-                                              "Percent Obese" = 10,
-                                              "Percent Childhood Obesity" = 11,
-                                              "Percent Binge-Drinkers" = 12)),
-                   selectInput("selected_zipcode_2", h3("Zipcode 1"), 
-                               choices = list("49301" = 1, "49302" = 2, "49306" = 3, "49315" = 4,
-                                              "49316" = 5, "49319" = 6, "49321" = 7, "49326" = 8,
-                                              "49330" = 9, "49331" = 10, "49341" = 11,
-                                              "49345" = 12, "49418" = 13, "49503" = 14, "49504" = 15, 
-                                              "49505" = 16, "49506" = 17, "49507" = 18, "49508" = 19,
-                                              "49509" = 20, "49512" = 21, "49519" = 22, "49525" = 23,
-                                              "49534" = 24, "49544" = 25, "49546" = 26, "49548" = 27)),
-                   selectInput("selected_zipcode_2", h3("Zipcode 2"), 
-                               choices = list("49301" = 1, "49302" = 2, "49306" = 3, "49315" = 4,
-                                              "49316" = 5, "49319" = 6, "49321" = 7, "49326" = 8,
-                                              "49330" = 9, "49331" = 10, "49341" = 11,
-                                              "49345" = 12, "49418" = 13, "49503" = 14, "49504" = 15, 
-                                              "49505" = 16, "49506" = 17, "49507" = 18, "49508" = 19,
-                                              "49509" = 20, "49512" = 21, "49519" = 22, "49525" = 23,
-                                              "49534" = 24, "49544" = 25, "49546" = 26, "49548" = 27))
+                   selectInput("selected_variable", h3("Select a Variable of Interest"), choices = education_choices),
+                   selectInput("selected_zipcode_2", h3("Zipcode 1"), choices = zip_choices),
+                   selectInput("selected_zipcode_2", h3("Zipcode 2"), choices = zip_choices)
                  )),
         tabPanel("Economic Stability", 
                  sidebarPanel(
                    tags$p(HTML("<b>Zip Codes</b>")),
                    tags$p(span("Use the controls below to explore and compare some of the factors that determine the
                                economic stability of residents in different Kent County zipcodes.")),
-                   selectInput("selected_health_outcome", h3("Health Outcome of Interest"), 
-                               choices = list("Life Expectancy" = 1, "Percent COPD" = 2,
-                                              "Percent Depression" = 3,
-                                              "Percent Diabetes" = 4,
-                                              "Percent Heart Disease" = 5,
-                                              "Percent High Cholesterol" = 6,
-                                              "Percent High Blood Pressure" = 7,
-                                              "Percent Stroke" = 8,
-                                              "Percent Overweight" = 9,
-                                              "Percent Obese" = 10,
-                                              "Percent Childhood Obesity" = 11,
-                                              "Percent Binge-Drinkers" = 12)),
-                   selectInput("selected_zipcode_2", h3("Zipcode 1"), 
-                               choices = list("49301" = 1, "49302" = 2, "49306" = 3, "49315" = 4,
-                                              "49316" = 5, "49319" = 6, "49321" = 7, "49326" = 8,
-                                              "49330" = 9, "49331" = 10, "49341" = 11,
-                                              "49345" = 12, "49418" = 13, "49503" = 14, "49504" = 15, 
-                                              "49505" = 16, "49506" = 17, "49507" = 18, "49508" = 19,
-                                              "49509" = 20, "49512" = 21, "49519" = 22, "49525" = 23,
-                                              "49534" = 24, "49544" = 25, "49546" = 26, "49548" = 27)),
-                   selectInput("selected_zipcode_2", h3("Zipcode 2"), 
-                               choices = list("49301" = 1, "49302" = 2, "49306" = 3, "49315" = 4,
-                                              "49316" = 5, "49319" = 6, "49321" = 7, "49326" = 8,
-                                              "49330" = 9, "49331" = 10, "49341" = 11,
-                                              "49345" = 12, "49418" = 13, "49503" = 14, "49504" = 15, 
-                                              "49505" = 16, "49506" = 17, "49507" = 18, "49508" = 19,
-                                              "49509" = 20, "49512" = 21, "49519" = 22, "49525" = 23,
-                                              "49534" = 24, "49544" = 25, "49546" = 26, "49548" = 27))
+                   selectInput("selected_variable", h3("Select a Variable of Interest"), choices = economic_choices),
+                   selectInput("selected_zipcode_2", h3("Zipcode 1"), choices = zip_choices),
+                   selectInput("selected_zipcode_2", h3("Zipcode 2"), choices = zip_choices)
                  )),
         tabPanel("Education Access and Quality", 
                  sidebarPanel(
                    tags$p(HTML("<b>Zip Codes</b>")),
                    tags$p(span("Use the controls below to explore and compare some of the factors that 
                                mtheir residents.")),
-                   selectInput("selected_health_outcome", h3("Health Outcome of Interest"), 
-                               choices = list("Life Expectancy" = 1, "Percent COPD" = 2,
-                                              "Percent Depression" = 3,
-                                              "Percent Diabetes" = 4,
-                                              "Percent Heart Disease" = 5,
-                                              "Percent High Cholesterol" = 6,
-                                              "Percent High Blood Pressure" = 7,
-                                              "Percent Stroke" = 8,
-                                              "Percent Overweight" = 9,
-                                              "Percent Obese" = 10,
-                                              "Percent Childhood Obesity" = 11,
-                                              "Percent Binge-Drinkers" = 12)),
-                   selectInput("selected_zipcode_2", h3("Zipcode 1"), 
-                               choices = list("49301" = 1, "49302" = 2, "49306" = 3, "49315" = 4,
-                                              "49316" = 5, "49319" = 6, "49321" = 7, "49326" = 8,
-                                              "49330" = 9, "49331" = 10, "49341" = 11,
-                                              "49345" = 12, "49418" = 13, "49503" = 14, "49504" = 15, 
-                                              "49505" = 16, "49506" = 17, "49507" = 18, "49508" = 19,
-                                              "49509" = 20, "49512" = 21, "49519" = 22, "49525" = 23,
-                                              "49534" = 24, "49544" = 25, "49546" = 26, "49548" = 27)),
-                   selectInput("selected_zipcode_2", h3("Zipcode 2"), 
-                               choices = list("49301" = 1, "49302" = 2, "49306" = 3, "49315" = 4,
-                                              "49316" = 5, "49319" = 6, "49321" = 7, "49326" = 8,
-                                              "49330" = 9, "49331" = 10, "49341" = 11,
-                                              "49345" = 12, "49418" = 13, "49503" = 14, "49504" = 15, 
-                                              "49505" = 16, "49506" = 17, "49507" = 18, "49508" = 19,
-                                              "49509" = 20, "49512" = 21, "49519" = 22, "49525" = 23,
-                                              "49534" = 24, "49544" = 25, "49546" = 26, "49548" = 27))
+                   selectInput("selected_variable", h3("Select a Variable of Interest"), choices = education_choices),
+                   selectInput("selected_zipcode_2", h3("Zipcode 1"), choices = zip_choices),
+                   selectInput("selected_zipcode_2", h3("Zipcode 2"), choices = zip_choices)
                  )),
         tabPanel("Healthcare Access and Quality", 
                  sidebarPanel(
                    tags$p(HTML("<b>Zip Codes</b>")),
                    tags$p(span("Use the controls below select two zip codes to compare the health outcomes of their residents.")),
-                   selectInput("selected_health_outcome", h3("Health Outcome of Interest"), 
-                               choices = list("Life Expectancy" = 1, "Percent COPD" = 2,
-                                              "Percent Depression" = 3,
-                                              "Percent Diabetes" = 4,
-                                              "Percent Heart Disease" = 5,
-                                              "Percent High Cholesterol" = 6,
-                                              "Percent High Blood Pressure" = 7,
-                                              "Percent Stroke" = 8,
-                                              "Percent Overweight" = 9,
-                                              "Percent Obese" = 10,
-                                              "Percent Childhood Obesity" = 11,
-                                              "Percent Binge-Drinkers" = 12)),
-                   selectInput("selected_zipcode_2", h3("Zipcode 1"), 
-                               choices = list("49301" = 1, "49302" = 2, "49306" = 3, "49315" = 4,
-                                              "49316" = 5, "49319" = 6, "49321" = 7, "49326" = 8,
-                                              "49330" = 9, "49331" = 10, "49341" = 11,
-                                              "49345" = 12, "49418" = 13, "49503" = 14, "49504" = 15, 
-                                              "49505" = 16, "49506" = 17, "49507" = 18, "49508" = 19,
-                                              "49509" = 20, "49512" = 21, "49519" = 22, "49525" = 23,
-                                              "49534" = 24, "49544" = 25, "49546" = 26, "49548" = 27)),
-                   selectInput("selected_zipcode_2", h3("Zipcode 2"), 
-                               choices = list("49301" = 1, "49302" = 2, "49306" = 3, "49315" = 4,
-                                              "49316" = 5, "49319" = 6, "49321" = 7, "49326" = 8,
-                                              "49330" = 9, "49331" = 10, "49341" = 11,
-                                              "49345" = 12, "49418" = 13, "49503" = 14, "49504" = 15, 
-                                              "49505" = 16, "49506" = 17, "49507" = 18, "49508" = 19,
-                                              "49509" = 20, "49512" = 21, "49519" = 22, "49525" = 23,
-                                              "49534" = 24, "49544" = 25, "49546" = 26, "49548" = 27))
+                   selectInput("selected_variable", h3("Select a Variable of Interest"), choices = healthaccess_choices),
+                   selectInput("selected_zipcode_2", h3("Zipcode 1"), choices = zip_choices),
+                   selectInput("selected_zipcode_2", h3("Zipcode 2"), choices = zip_choices)
                  )),
       tabPanel("Health Outcomes", 
                sidebarPanel(
                  tags$p(HTML("<b>Zip Codes</b>")),
                  tags$p(span("Use the controls below select two zip codes to compare the health outcomes of their residents.")),
-                 selectInput(selectInput("selected_health_outcome", h3("Health Outcome of Interest"), 
-                                         choices = list("Life Expectancy" = 1, "Percent COPD" = 2,
-                                                        "Percent Depression" = 3,
-                                                        "Percent Diabetes" = 4,
-                                                        "Percent Heart Disease" = 5,
-                                                        "Percent High Cholesterol" = 6,
-                                                        "Percent High Blood Pressure" = 7,
-                                                        "Percent Stroke" = 8,
-                                                        "Percent Overweight" = 9,
-                                                        "Percent Obese" = 10,
-                                                        "Percent Childhood Obesity" = 11,
-                                                        "Percent Binge-Drinkers" = 12)),
-                   selectInput("selected_zipcode_1", h3("Zipcode 1"), 
-                             choices = list("49301" = 1, "49302" = 2, "49306" = 3, "49315" = 4,
-                                            "49316" = 5, "49319" = 6, "49321" = 7, "49326" = 8,
-                                            "49330" = 9, "49331" = 10, "49341" = 11,
-                                            "49345" = 12, "49418" = 13, "49503" = 14, "49504" = 15, 
-                                            "49505" = 16, "49506" = 17, "49507" = 18, "49508" = 19,
-                                            "49509" = 20, "49512" = 21, "49519" = 22, "49525" = 23,
-                                            "49534" = 24, "49544" = 25, "49546" = 26, "49548" = 27)),
-                 selectInput("selected_zipcode_2", h3("Zipcode 2"), 
-                             choices = list("49301" = 1, "49302" = 2, "49306" = 3, "49315" = 4,
-                                             "49316" = 5, "49319" = 6, "49321" = 7, "49326" = 8,
-                                             "49330" = 9, "49331" = 10, "49341" = 11,
-                                             "49345" = 12, "49418" = 13, "49503" = 14, "49504" = 15, 
-                                             "49505" = 16, "49506" = 17, "49507" = 18, "49508" = 19,
-                                             "49509" = 20, "49512" = 21, "49519" = 22, "49525" = 23,
-                                             "49534" = 24, "49544" = 25, "49546" = 26, "49548" = 27))
+                 selectInput("selected_variable", h3("Health Outcome of Interest"), choices = outcomes_choices),
+                   selectInput("selected_zipcode_1", h3("Zipcode 1"), choices = zip_choices),
+                 selectInput("selected_zipcode_2", h3("Zipcode 2"), choices = zip_choices)
                ))
       ))
 
@@ -344,6 +222,22 @@ server <- function(input, output) {
     imageUrl = "",
     animation = TRUE        
   )
+
+  output$plot <- reactive({
+    renderLeaflet(    
+      plot_var_by_zip(var = vmapping %>% 
+                        filter(label == input$selected_variable) %>%
+                        pull(value),
+                      subtitle = input$selected_variable)
+      
+    )
+
+  })
+  
+  observe({
+    leafletProxy("plot")
+  })
+  
 }
 
 shinyApp(ui = ui, server = server)

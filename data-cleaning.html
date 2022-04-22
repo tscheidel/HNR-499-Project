@@ -215,6 +215,12 @@ pop_tbl &lt;- pop_zip_codes %&gt;%
 tbl &lt;- metrics_tbl %&gt;% 
   left_join(pop_tbl, by = &quot;zipcode&quot;)
 
+tbl &lt;- tbl %&gt;%
+  select(-estimated_percent_of_all_people_without_health_insurance_betwee.y) %&gt;%
+  mutate(estimated_percent_of_all_people_without_health_insurance_betwee =
+           coalesce(estimated_percent_of_all_people_without_health_insurance_betwee.x,
+                    estimated_percent_of_all_people_without_health_insurance_betwee))
+
 write_csv(tbl, &quot;kent_county_2020_data.csv&quot;)</code></pre>
 </div>
 
