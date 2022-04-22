@@ -17,6 +17,9 @@ options(tigris_use_cache = TRUE)
 ## Leaflet Visualizations
 
 ```{r}
+tbl <- read_csv("kent_county_2020_data.csv")
+
+zip_codes <- tbl %>% pull("zipcode") %>% as.character()
 
 char_zips <- zctas(cb = TRUE, starts_with = zip_codes) %>% 
   geo_join(tbl, by_sp = "GEOID10", by_df = "zipcode", how = "left")
