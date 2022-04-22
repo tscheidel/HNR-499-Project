@@ -6,7 +6,7 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
 
 library(tidyverse)
 library(tigris)
@@ -17,11 +17,12 @@ options(tigris_use_cache = TRUE)
 ## Leaflet Visualizations
 
 ```{r}
-tbl <- read_csv("kent_county_2020_data.csv")
+tbl <- read_csv("kent_county_2020_data.csv") %>% 
+  mutate(zipcode = as.character(zipcode))
 
-zip_codes <- tbl %>% pull("zipcode") %>% as.character()
+zip_codes <- tbl %>% pull("zipcode")
 
-char_zips <- zctas(cb = TRUE, starts_with = zip_codes) %>% 
+char_zips <- zctas(cb = TRUE, starts_with = zip_codes, year = 2019) %>% 
   geo_join(tbl, by_sp = "GEOID10", by_df = "zipcode", how = "left")
 
 plot_var_by_zip <- function(var, subtitle) {
