@@ -5,7 +5,7 @@ account: tessscheidel
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 6167693
-bundleId: 5835191
+bundleId: 5836341
 url: https://tessscheidel.shinyapps.io/hnr-499-project/
-when: 1650906478.72955
-lastSyncTime: 1650906478.72958
+when: 1650929033.48037
+lastSyncTime: 1650929033.48039
