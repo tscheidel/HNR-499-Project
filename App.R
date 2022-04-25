@@ -94,7 +94,7 @@ ui <- fluidPage(theme = bs_theme(version = 4, bootswatch = "minty"),
                                  HTML("<a href='https://www.cdc.gov/socialdeterminants/index.htm'>CDC Social Determinants of Health</a></p>"), 
                                  HTML("<a href='https://health.gov/healthypeople/priority-areas/social-determinants-health'>USDHHS Healthy People 2030 Campaign</a>"),
                                  br(), 
-                                 p("All the information on the SDOHs on this page was taken from the pages linked above.")),
+                                 p("All the information on the SDOHs on this page was adapted from the sources linked above.")),
                    mainPanel(h2("Social Determinants of Health"),
                              p("The social determinants of health (SDOH) are the prevalent 
                              but often overlooked factors that play into an individual’s personal health. 
