@@ -40,7 +40,6 @@ demographic_choices <- list("Total Population",
 education_choices <- list("Percent of All Adults with Less than a 9th Grade Education",
                           "Graduation Rate",
                           "Percent of All Adults with a High School Diploma but No College Education",
-                          "Percent of All Asian People Who Have At Least A High School Diploma ",
                           "Percent of All Black/African American People Who Have At Least A High School Diploma",
                           "Percent of All Hispanic People Who Have At Least A High School Diploma",
                           "Percent of All White People Who Have At Least A High School Diploma",
@@ -60,7 +59,6 @@ economic_choices <- list("Median Household Income",
 healthaccess_choices <- list("Percent of All Adults with a Primary Care Physician",
                              "Percent of All Adults Who Have An Annual Physical",
                              "Average Out-of-Pocket Spending on Medical Expenses",
-                             "Percent of All People With Health Insurance ",
                              "Percent of All People Without Health Insurance",
                              "Percent of All Adults Ever Tested for HIV" )
 
@@ -94,9 +92,11 @@ ui <- fluidPage(theme = bs_theme(version = 4, bootswatch = "minty"),
                                   of the U.S Department of Health and Human Services Healthy People 2030 campaign,
                                   visit the following resources:"), 
                                  HTML("<a href='https://www.cdc.gov/socialdeterminants/index.htm'>CDC Social Determinants of Health</a></p>"), 
-                                 HTML("<a href='https://health.gov/healthypeople/priority-areas/social-determinants-health'>USDHHS Healthy People 2030 Campaign</a>")),
-                   mainPanel(h3("Social Determinants of Health"),
-                             p("The social determinants of health (SDOH) are the prevalent, 
+                                 HTML("<a href='https://health.gov/healthypeople/priority-areas/social-determinants-health'>USDHHS Healthy People 2030 Campaign</a>"),
+                                 br(), 
+                                 p("All the information on the SDOHs on this page was taken from the pages linked above.")),
+                   mainPanel(h2("Social Determinants of Health"),
+                             p("The social determinants of health (SDOH) are the prevalent 
                              but often overlooked factors that play into an individual’s personal health. 
                              Often, we are aware of how our own actions are affecting our health, such as eating right, exercising regularly, 
                              and avoiding risky behaviors such as smoking or excessive drinking. However, the SDOH play 
@@ -104,7 +104,7 @@ ui <- fluidPage(theme = bs_theme(version = 4, bootswatch = "minty"),
                              determinants of health fall into five categories: Neighborhood and Built Environment, Social and Economic
                             Context, Economic Stability, Education Access and Quality, Healthcare Access and Quality."),
                              br(),
-                             h4("Neighborhood and Built Environment"),
+                             h5("Neighborhood and Built Environment"),
                              p("An individual’s neighborhood and built environment incorporates a large range of factors,
                              including rates of violence and violent crimes, prevalence of unsafe water or air and 
                              accessibility to safe spaces for exercise and environmental play. Often, racial and 
@@ -113,14 +113,14 @@ ui <- fluidPage(theme = bs_theme(version = 4, bootswatch = "minty"),
                              outcomes associated with them. Interventions and changes at the governmental level are 
                              the most needed, as they have the highest impact on infrastructure changes."),
                              br(),
-                             h4("Social and Community Context"),
+                             h5("Social and Community Context"),
                              p("A person’s social support system and relationships can have a big impact on their health.
                              Living, learning, and working in environments that make an individual feel safe promotes
                              better overall health. However, some may face difficulties and discrimination in their lifetime
                              which correlates with more negative health outcomes. Cultivation of positive relationships within
                              a community, as well as those of an interpersonal nature, is very important to living a healthy life. "),
                              br(),
-                             h4("Economic Stability"),
+                             h5("Economic Stability"),
                              p("An individual’s economic stability plays a huge role in overall health. 
                              Those with steady employment are more likely to have better access to healthier foods, pay for 
                              healthcare expenses and live in safer neighborhoods—all of which play an important role in health. 
@@ -129,7 +129,7 @@ ui <- fluidPage(theme = bs_theme(version = 4, bootswatch = "minty"),
                              Government assistance and aid can decrease the health discrepancies we see in the population living 
                              in poverty and those unemployed."),
                              br(),
-                             h4("Education Access and Quality"),
+                             h5("Education Access and Quality"),
                              p("It is known that education is highly correlated with health and that individuals
                              with higher levels of education are more likely to lead to longer, healthier lives.
                              An individual’s success in school is often tied to the socioeconomic status of their
@@ -137,7 +137,7 @@ ui <- fluidPage(theme = bs_theme(version = 4, bootswatch = "minty"),
                              afford to send their children to college. These barriers to quality and continuing
                              education can effect an individual’s overall health later in their lifetimes. "),
                              br(),
-                             h4("Healthcare Access and Quality"),
+                             h5("Healthcare Access and Quality"),
                              p("This social determinant of health is often the first to come to mind when considering
                                someone’s overall health as an individual’s ability to seek and obtain quality health 
                                services is imperative for a healthy life. However, there are some major barriers to 
@@ -162,31 +162,48 @@ ui <- fluidPage(theme = bs_theme(version = 4, bootswatch = "minty"),
                    mainPanel(leafletOutput("demo_plot", height = "90%"),
                              textOutput("demo_test"))
                  )),
-        tabPanel("Neighborhood and Built Environment", 
+        tabPanel("Neighborhood and Built Environment & Social and Community Context", 
                  sidebarLayout(
                    sidebarPanel(
-                     tags$p(HTML("<b>Neighborhood and Built Environment</b>")),
-                     tags$p(span("Use the controls below to explore and compare some of the factors that 
-                               make up the neighborhoods and built environments of Kent County zipcodes.")),
-                     selectInput("nbe_variable", h3("Select a Variable of Interest"),choices = education_choices),
-                     selectInput("nbe_zipcode_1", h3("Zipcode 1"), choices = zip_choices),
-                     selectInput("nbe_zipcode_2", h3("Zipcode 2"), choices = zip_choices)
-                   ),
-                   mainPanel(leafletOutput("nbe_plot", height = "90%"),
-                             textOutput("nbe_test"))
-                 )),
-        tabPanel("Social and Community Context", 
-                 sidebarLayout(
-                   sidebarPanel(
-                     tags$p(HTML("<b>Social and Community Context</b>")),
-                     tags$p(span("Use the controls below to explore and compare some of the factors that make up the 
-                                social and community context in of Kent County zipcodes.")),
-                     selectInput("scc_variable", h3("Select a Variable of Interest"), choices = education_choices),
-                     selectInput("scc_zipcode_1", h3("Zipcode 1"), choices = zip_choices),
-                     selectInput("scc_zipcode_2", h3("Zipcode 2"), choices = zip_choices)
-                   ),
-                   mainPanel(leafletOutput("scc_plot", height = "90%"),
-                             textOutput("scc_test"))
+                     h5("Neighborhood and Built Environment"),
+                     p("An individual’s neighborhood and built environment incorporates a large range of factors,
+                       including rates of violence and violent crimes, prevalence of unsafe water or air and 
+                       accessibility to safe spaces for exercise and environmental play. Often, racial and 
+                       ethnic minorities, as well as those with low incomes, live in neighborhoods with high 
+                       rates of these health risks and share an unproportionate burden of the negative health 
+                       outcomes associated with them. Interventions and changes at the governmental level are 
+                       the most needed, as they have the highest impact on infrastructure changes."),
+                     br(),
+                     h5("Social and Community Context"),
+                     p("A person’s social support system and relationships can have a big impact on their health.
+                       Living, learning, and working in environments that make an individual feel safe promotes
+                       better overall health. However, some may face difficulties and discrimination in their lifetime
+                       which correlates with more negative health outcomes. Cultivation of positive relationships within
+                       a community, as well as those of an interpersonal nature, is very important to living a healthy life. ")),
+                   mainPanel(h3("The Importance of the Neighborhood and Built Environment & Social and Community Context
+                                Social Determinants of Health"),
+                             p("The environment and community that a person lives in has a huge impact on the overall
+                               health of that individual. Neighborhood environments and community relationships are dynamic
+                               and can change, for positive or negative, throughout an individual's lifetime. Living in an 
+                               environment and fostering support structures that promote good health and safety can lead to
+                               healthier outcomes for individuals and communities. There are a lot of factors that can contribute
+                               to these social determinants of health that deserve to be looked at more in depth."),
+                             br(),
+                             p("I was looking forward to diving into the effects of these SDOH; however, I ran into a few issues
+                               when attempting to collect/download data from the PolicyMap database related to these social
+                               determinants of health. Particularly, many of the possible data points related to Neighborhood and
+                               Built Environment, such as crime rates and greenspace, were collected at the city or county level and
+                               therefore could not be analyzed on a zip code level."),
+                             br(),
+                             p("Further, there were not very many, if any, data points collected related to Social and Community
+                               Context. This may be because many large scale questionnaires or surveys, including the Census, do not
+                               colelct data on interpersonal relationships or social support groups. Social and Community Context is
+                               personal and individualized social determinant and can vary greatly from person to person. It would be
+                               hard to collect aggregate data on a community's relationships. Therefore, a more personable or 
+                               individualized way of collecting this data would be necessary to obtain this information for analysis."),
+                             br(),
+                             p("As I continue to work and grow this application, I will look into alternate data sources and organizations
+                               to attempt to find usable data to visualize and analyze for this project."))
                  )),
         tabPanel("Economic Stability", 
                  sidebarLayout(
@@ -244,18 +261,18 @@ ui <- fluidPage(theme = bs_theme(version = 4, bootswatch = "minty"),
                sidebarLayout(
                  sidebarPanel(
                    tags$p(HTML("<b>About this Project</b>")),
-                   tags$p(span("This Shiny Application was made as the culminating project for my undergraduate career
+                   tags$p(span("This Shiny Application was is culminating project of my undergraduate career
                                in Grand Valley State University's Frederick Meijer Honors College. As graduating seniors,
-                               students had to complete an independet project on a topic, and in a medium, of their choice.
+                               students were asked to complete an independet project on a topic of their choice.
                                I chose to synthesize my love for public health and my background in statistics to analyze
                                the social determinants of health and their impacts on the health outcomes of those living
-                               in Kent County. That being said, this application can definitely be expanded upon and it is
-                               my hope and my intention to continue to grow this application in the future to include more 
-                               analysis options and data points.")),
+                               in Kent County. It is my hope and my intention to continue to grow this application in the 
+                               future to include more analysis options and data points, as I continue my education in
+                               the field of Public Health.")),
                     br(),
                     tags$p(span("I would like to thank Dr. Alisha Davis, who first introduced me to the topic global health
-                                and the social determinants. Thank you for being my mentor and guide throughout this project.")),
-                   tags$p(span("I would also like to thank Dr. Julia VanderMolen for introducing me to the PolicyMaps Database,
+                                and the social determinants of health. Thank you for being my mentor and guide throughout this project.")),
+                    tags$p(span("I would also like to thank Dr. Julia VanderMolen for introducing me to the PolicyMaps Database,
                                where I was able to download all of the data used for this project."))
                 ),
                 mainPanel(h3("Notes and Future Directions"),
@@ -311,10 +328,10 @@ server <- function(input, output, session) {
                 of the social determinants.</p>
             <br/>
             <p style='text-align:left'> Each tab will be divided into two portions. On the left, the side panel will display
-                a few drop down menus, where users will be able to choose which variable to compare. This side panel will also
-                have a space for users to choose 2 zipcodes to compare statistically via an unadjusted difference in proportions
-                test. The main panel will display a map outlining the individual zipcodes within Kent County, shaded based on the
-                descriptive variable selected. Below the map, users will find the outcome of the proportion test. </p>
+                a few drop down menus, where users will be able to choose a variable to compare between zipcodes. This side
+                panel will also have a space for users to choose 2 zipcodes to compare statistically via an unadjusted difference 
+                in proportions test. The main panel will display a map outlining the individual zipcodes within Kent County, shaded 
+                based on the descriptive variable selected. Below the map, users will find the outcome of the proportion test. </p>
             <br/>
             <p style='text-align:left'> The data used for this project was downloaded from the PolicyMap database. To explore
                 further zipcodes and counties please visit the <a href=\"https://gvsu-policymap-com.ezproxy.gvsu.edu/maps\">PolicyMap database</a>.</p> 
