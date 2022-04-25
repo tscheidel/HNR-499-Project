@@ -76,7 +76,7 @@ ui <- fluidPage(theme = bs_theme(version = 4, bootswatch = "minty"),
                           div(style = "padding: 1px 0px; width: '100%'",
                               titlePanel(
                                 title = "",
-                                windowTitle = "Art Explorer"
+                                windowTitle = "SDOH in Kent County, MI"
                               )
                           ),
     
