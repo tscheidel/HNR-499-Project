@@ -65,7 +65,7 @@ plot_var_by_zip <- function(var, subtitle) {
       "Zip Code: ",
       char_zips$GEOID10, "<br/>",
       subtitle, ": ",
-      scales::percent(measure, scale = 1)) %>% # percent
+      scales::percent(measure, scale = 1, accuracy = 0.01)) %>% # percent
       lapply(htmltools::HTML)
   }
   
