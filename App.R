@@ -135,7 +135,7 @@ ui <- fluidPage(theme = bs_theme(version = 4, bootswatch = "minty"),
                              br(),
                              p("Further, there were not very many, if any, data points collected related to Social and Community
                                Context. This may be because many large scale questionnaires or surveys, including the Census, do not
-                               colelct data on interpersonal relationships or social support groups. Social and Community Context is
+                               collect data on interpersonal relationships or social support groups. Social and Community Context is
                                personal and individualized social determinant and can vary greatly from person to person. It would be
                                hard to collect aggregate data on a community's relationships. Therefore, a more personable or 
                                individualized way of collecting this data would be necessary to obtain this information for analysis."),
@@ -199,9 +199,9 @@ ui <- fluidPage(theme = bs_theme(version = 4, bootswatch = "minty"),
                sidebarLayout(
                  sidebarPanel(
                    tags$p(HTML("<b>About this Project</b>")),
-                   tags$p(span("This Shiny Application was is culminating project of my undergraduate career
+                   tags$p(span("This Shiny Application is culminating project of my undergraduate career
                                in Grand Valley State University's Frederick Meijer Honors College. As graduating seniors,
-                               students were asked to complete an independet project on a topic of their choice.
+                               students were asked to complete an independent project on a topic of their choice.
                                I chose to synthesize my love for public health and my background in statistics to analyze
                                the social determinants of health and their impacts on the health outcomes of those living
                                in Kent County. It is my hope and my intention to continue to grow this application in the 
